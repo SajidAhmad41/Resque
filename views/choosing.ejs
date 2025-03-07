@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .button-like {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .button-like:hover {
+            background-color: #0056b3;
+        }
+
+        .image-placeholder {
+            margin-top: 20px;
+        }
+
+        .image-placeholder img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Started Now</h1>
+        <a href="/volunteerdata" class="button-like">Join as Volunteer</a>
+        <a href="/dashboard" class="button-like">Need Help?</a>
+
+        <div class="image-placeholder">
+            <img src="choosing.jpeg" alt="Hands Joined">
+        </div>
+    </div>
+    <script type="module">
+        import { exampleFunction } from './module.js';
+        exampleFunction();
+
+        //document.addEventListener('DOMContentLoaded', function() {
+            //alert('Welcome to the Get Started Page!');
+        //});
+    </script>
+    
+</body>
+</html>
