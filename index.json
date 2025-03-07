@@ -1,281 +1,109 @@
-// const express = require('express');
-// const admin = require('firebase-admin');
-// const path = require('path');
-// const session = require('express-session');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Data Collection</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script defer src="/volunteer.js"></script>
 
-// // Initialize Firebase Admin SDK
-// const serviceAccount = require("./auth.json");
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c5282;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2c5282;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #1a365d;
+        }
+        .required:after {
+            content: " *";
+            color: #e53e3e;
+        }
+        .success-message {
+            display: none;
+            background-color: #c6f6d5;
+            border: 1px solid #38a169;
+            color: #276749;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Volunteer Data Collection Form</h1>
 
-// const app = express();
-// const PORT = process.env.PORT || 3000;
+    <div class="form-container">
+        <form id="volunteerForm">
+            <div class="form-group">
+                <label for="fullName" class="required">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
 
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-// app.use(session({ secret: 'rapidrescue', resave: false, saveUninitialized: true }));
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
-// app.use(express.static('public'));
+            <div class="form-group">
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-// // Routes
-// app.get('/', (req, res) => {
-//     res.render('signup');
-// });
+            <div class="form-group">
+                <label for="phone" class="required">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
 
-// app.get('/login', (req, res) => {
-//     res.render('login');
-// });
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address"></textarea>
+            </div>
 
-// app.get('/dashboard', (req, res) => {
-//     if (!req.session.user) {
-//         return res.redirect('/login');
-//     }
-//     res.render('dashboard', { user: req.session.user });
-// });
+            <button type="submit">Submit Volunteer Information</button>
+        </form>
+    </div>
 
-// app.post('/signup', async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const userRecord = await admin.auth().createUser({
-//             email,
-//             password
-//         });
-//         req.session.user = userRecord;
-//         res.redirect('/dashboard');
-//     } catch (error) {
-//         res.send(`Error: ${error.message}`);
-//     }
-// });
-
-// app.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const user = await admin.auth().getUserByEmail(email);
-//         req.session.user = user;
-//         res.redirect('/dashboard');
-//     } catch (error) {
-//         res.send(`Error: ${error.message}`);
-//     }
-// });
-
-// app.get('/logout', (req, res) => {
-//     req.session.destroy();
-//     res.redirect('/login');
-// });
-
-// app.listen(PORT, () => {
-//     console.log(`Server running on http://localhost:${PORT}`);
-// });
-
-
-// const express = require("express");
-// const admin = require("firebase-admin");
-// const bodyParser = require("body-parser");
-// const session = require("express-session");
-// const path = require("path");
-
-// // Initialize Firebase Admin SDK
-// const serviceAccount = require("./auth.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://rapid-rescue-7d965.firebaseio.com",
-// });
-
-// const app = express();
-// const port = 3000;
-
-// // Middleware
-// app.set("view engine", "ejs");
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, "public")));
-
-// app.use(
-//   session({
-//     secret: "rapidrescue_secret",
-//     resave: false,
-//     saveUninitialized: true,
-//   })
-// );
-
-// // ----------------- ROUTES -----------------
-
-// // Home Route (Redirect to Signup first)
-// app.get("/", (req, res) => {
-//   if (req.session.user) {
-//     return res.redirect("/dashboard");
-//   }
-//   res.redirect("/signup");
-// });
-
-// // Signup Page
-// app.get("/signup", (req, res) => {
-//   res.render("signup");
-// });
-
-// // Signup Logic
-// app.post("/signup", async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const userRecord = await admin.auth().createUser({
-//       email,
-//       password,
-//     });
-//     console.log("User created successfully:", userRecord.uid);
-//     req.session.user = userRecord;
-//     res.redirect("/dashboard");
-//   } catch (error) {
-//     console.error("Signup Error:", error.message);
-//     res.send("Signup failed: " + error.message);
-//   }
-// });
-
-// // Login Page
-// app.get("/login", (req, res) => {
-//   res.render("login");
-// });
-
-// // Login Logic
-// app.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     // Firebase doesn't support password verification on the backend
-//     // Instead, use Firebase Authentication on the client-side
-//     const user = await admin.auth().getUserByEmail(email);
-//     req.session.user = user;
-//     console.log("Login successful:", user.uid);
-//     res.redirect("/dashboard");
-//   } catch (error) {
-//     console.error("Login Error:", error.message);
-//     res.send("Login failed: " + error.message);
-//   }
-// });
-
-// // Dashboard Page (Protected Route)
-// app.get("/dashboard", (req, res) => {
-//   if (!req.session.user) {
-//     return res.redirect("/login");
-//   }
-//   res.render("dashboard");
-// });
-
-// // Logout
-// app.get("/logout", (req, res) => {
-//   req.session.destroy();
-//   res.redirect("/login");
-// });
-
-// // Start Server
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
-
-
-const express = require("express");
-const admin = require("firebase-admin");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const path = require("path");
-
-// Initialize Firebase Admin SDK
-const serviceAccount = require("./auth.json");
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-});
-
-const app = express();
-const port = 3000;
-
-// Middleware
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(
-    session({
-        secret: "rapidrescue_secret",
-        resave: false,
-        saveUninitialized: true,
-    })
-);
-
-// ----------------- ROUTES -----------------
-
-// Home Route (Redirect to Signup first)
-app.get("/", (req, res) => {
-    if (req.session.user) {
-        return res.redirect("/dashboard");
-    }
-    res.redirect("/signup");
-});
-
-// Signup Page
-app.get("/signup", (req, res) => {
-    res.render("signup");
-});
-
-// Signup Logic (Only Firebase Authentication)
-app.post("/signup", async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Create user in Firebase Authentication
-        const userRecord = await admin.auth().createUser({
-            email,
-            password,
-        });
-
-        console.log("User created successfully:", userRecord.uid);
-        req.session.user = userRecord;
-        res.redirect("/dashboard");
-    } catch (error) {
-        console.error("Signup Error:", error.message);
-        res.send("Signup failed: " + error.message);
-    }
-});
-
-// Login Page
-app.get("/login", (req, res) => {
-    res.render("login");
-});
-
-// Login Logic
-app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Get user by email
-        const user = await admin.auth().getUserByEmail(email);
-
-        req.session.user = user;
-        console.log("Login successful:", user.uid);
-        res.redirect("/dashboard");
-    } catch (error) {
-        console.error("Login Error:", error.message);
-        res.send("Login failed: " + error.message);
-    }
-});
-
-// Dashboard Page (Protected Route)
-app.get("/dashboard", (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
-    res.render("dashboard");
-});
-
-// Logout
-app.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("/login");
-});
-
-// Start Server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
-
+    <div id="successMessage" class="success-message">
+        Thank you for your submission! Redirecting...
+    </div>
+</body>
+</html>
