@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapid Rescue Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f7fc;
+            text-align: center;
+        }
+
+        header {
+            background: #f37a1f;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        #logout-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .search-bar,
+        .department-search {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .emergency-icon img {
+            width: 100px;
+            margin: 15px 0;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .action-item {
+            text-align: center;
+        }
+
+        .action-item img {
+            width: 80px;
+            border-radius: 10px;
+        }
+
+        .departments {
+            padding: 20px;
+        }
+
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .department-card {
+            text-align: center;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .department-card img {
+            width: 80px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="dashboard-page">
+    <header>
+        <div class="logo">RAPID RESCUE</div>
+        <nav>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+            <a href="#">News</a>
+            <button id="logout-btn">Logout</button>
+        </nav>
+    </header>
+
+    <section class="main-content">
+        <input type="text" placeholder="Search" class="search-bar">
+        <div class="emergency-icon">
+            <img src="sirene.jpeg" alt="Emergency Icon">
+        </div>
+        <h1>RAPID RESCUE</h1>
+        <p class="subtitle">Find volunteers near you</p>
+
+        <div class="actions">
+            <div class="action-item">
+                <a href="insidelocation.html" class="department-card">
+                    <img src="location.jpeg" alt="Location">
+                    <p>Location</p>
+                </a>
+            </div>
+            <div class="action-item">
+                <img src="call.jpeg" alt="Phone Call">
+                <p>Phone call</p>
+            </div>
+            <div class="action-item">
+                <a href="volunteer.html" class="department-card">
+                    <img src="help.jpeg" alt="Help">
+                    <p>HELP</p>
+                </a>
+            </div>
+        </div>
+
+        <input type="text" placeholder="Search departments" class="department-search">
+    </section>
+
+    <section class="departments">
+        <h2>Departments</h2>
+        <div class="department-grid">
+            <% let departments=[ { link: 'ambulance.html' , img: 'ambulance.jpeg' , name: 'Ambulance' }, {
+                link: 'fire.html' , img: 'fire.jpeg' , name: 'Fire engine' }, { link: 'accident.html' ,
+                img: 'accident.jpeg' , name: 'Accident' }, { link: 'women.html' , img: 'women.jpeg' ,
+                name: 'Women safety' }, { link: 'disaster.html' , img: 'disaster.jpeg' , name: 'Disaster' }, {
+                link: 'mindmate.html' , img: 'mindmate.jpg' , name: 'MindMate' }, { link: 'bloodbridge.html' ,
+                img: 'bloodbridge.jpg' , name: 'BloodBridge' }, { link: 'eldercare.html' , img: 'eldercare.jpg' ,
+                name: 'ElderCare' } ]; %>
+
+                <% departments.forEach(dept=> { %>
+                    <div class="department-card">
+                        <a href="<%= dept.link %>" class="department-card">
+                            <img src="<%= dept.img %>" alt="<%= dept.name %>">
+                            <p>
+                                <%= dept.name %>
+                            </p>
+                        </a>
+                    </div>
+                    <% }) %>
+        </div>
+    </section>
+</body>
+
+</html>
