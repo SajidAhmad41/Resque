@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Rapid Rescue">
+  <rect width="120" height="120" rx="24" fill="#f37a1f" />
+  <circle cx="60" cy="46" r="22" fill="#fff" />
+  <path d="M28 92c4-18 18-28 32-28s28 10 32 28" fill="#fff" />
+</svg>
